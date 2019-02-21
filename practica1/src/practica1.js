@@ -102,22 +102,14 @@ MemoryGame = function(gs) {
     /** Funciones Auxiliares */
     this.createCards = function() {/**XX */
 		this.gameCards = [
-			new MemoryGameCard("8-ball"),
-			new MemoryGameCard("8-ball"),
-			new MemoryGameCard("potato"), 
-			new MemoryGameCard("potato"),
-			new MemoryGameCard("dinosaur"), 
-			new MemoryGameCard("dinosaur"),
-			new MemoryGameCard("kronos"), 
-			new MemoryGameCard("kronos"),
-			new MemoryGameCard("rocket"), 
-			new MemoryGameCard("rocket"),
-			new MemoryGameCard("unicorn"), 
-			new MemoryGameCard("unicorn"),
-			new MemoryGameCard("guy"), 
-			new MemoryGameCard("guy"),
-			new MemoryGameCard("zeppelin"), 
-			new MemoryGameCard("zeppelin")
+			new MemoryGameCard("8-ball"),new MemoryGameCard("8-ball"),
+			new MemoryGameCard("potato"), new MemoryGameCard("potato"),
+			new MemoryGameCard("dinosaur"), new MemoryGameCard("dinosaur"),
+			new MemoryGameCard("kronos"), new MemoryGameCard("kronos"),
+			new MemoryGameCard("rocket"), new MemoryGameCard("rocket"),
+			new MemoryGameCard("unicorn"), new MemoryGameCard("unicorn"),
+			new MemoryGameCard("guy"), new MemoryGameCard("guy"),
+			new MemoryGameCard("zeppelin"), new MemoryGameCard("zeppelin")
 		]
     }
 
