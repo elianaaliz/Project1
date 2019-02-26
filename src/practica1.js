@@ -13,9 +13,9 @@ MemoryGame = function(gs) {
     this.gs = gs;   //servidor gráfico
     this.nameCards = ["8-ball","potato","dinosaur","kronos","rocket","unicorn","guy","zeppelin"];//nombre de las cartas del juego
     this.gameCards = [];    //array de cartas de juego
-    this.Cardsfound; //# cartas encontradas
+    this.Cardsfound;    //# cartas encontradas
     this.messageGame;   //Mensaje del juego
-    this.state; //Estado Actual del juego
+    this.state;     //Estado Actual del juego
     this.cardOne;   //Primera Carta
     this.cardTwo;   //Segunda Carta
     
@@ -39,7 +39,7 @@ MemoryGame = function(gs) {
     */
    this.draw = function(){
         this.gs.drawMessage(this.messageGame);
-        
+
         for(var i = 0; i < this.gameCards.length ; i++){
             this.gameCards[i].draw(this.gs, i);
         }
@@ -136,6 +136,7 @@ MemoryGame = function(gs) {
 	}
     
 };
+
 
 
 /**
