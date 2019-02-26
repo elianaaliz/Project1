@@ -11,6 +11,7 @@ var MemoryGame = MemoryGame || {};
 MemoryGame = function(gs) {
 
     this.gs = gs;   //servidor gráfico
+    this.nameCards = ["8-ball","potato","dinosaur","kronos","rocket","unicorn","guy","zeppelin"];//nombre de las cartas del juego
     this.gameCards = [];    //array de cartas de juego
     this.Cardsfound; //# cartas encontradas
     this.messageGame;   //Mensaje del juego
@@ -27,8 +28,8 @@ MemoryGame = function(gs) {
     this.Cardsfound = 0;
     this.state = 0;
     this.createCards(); //crearCartas
-	this.messUpCards(); //DesordenarCartas
-    this.loop();    //Bucle del juego
+	this.mixUpCards(); //DesordenarCartas
+    this.loop();    //Bucle principal del juego
    }
 
    /**Dibuja el juego, esto es: (1) escribe el mensaje con el estado actual
@@ -40,11 +41,12 @@ MemoryGame = function(gs) {
             this.gameCards[i].draw(this.gs, i);
         }
    }
+
    /**  Es el bucle del juego. En este caso es muy sencillo: llamamos al
     método draw cada 16ms (equivalente a unos 60fps). Esto se realizará con
     la función setInterval de Javascript
     */
-    this.loop = function(){//yeee
+    this.loop = function(){
         var that = this;
         setInterval(function(){
             that.draw()},16);
@@ -60,13 +62,13 @@ MemoryGame = function(gs) {
        
         //Si es la primera carta que elige(state = 0)
         // es decir no ha sido elegida
-        if(this.state == 0 && !this.gameCards[cardId].isFlipped){
+        if(this.state == 0 && !this.gameCards[cardId].isTurned){
             this.cardOne = this.gameCards[cardId];
             this.cardOne.flip();
             this.state = 1; //ha elegido una carta, vamos a por la segunda
         }
         //Hemos pillado la segunda
-        if(this.state == 1 && !this.gameCards[cardId].isFlipped){
+        if(this.state == 1 && !this.gameCards[cardId].isTurned){
             this.cardTwo = this.gameCards[cardId];
             this.cardTwo.flip();
             this.state = 2;
@@ -74,16 +76,16 @@ MemoryGame = function(gs) {
             firstCard = this.cardOne;
 			secondCard = this.cardTwo;
 			var that = this;
-            
+            //Empieza al comprobacion del estado 2
             if(firstCard.compareTo(secondCard)){  //Si son iguales
-                this.Cardsfound = this.Cardsfound + 2;
+                this.Cardsfound = this.Cardsfound + 2;  //Aumentamos en dos el numero de cartas pilladas
 				firstCard.found();
 				secondCard.found();
 				this.messageGame = "Match found..!!";
 				that.state = 0; //Volvemos al estado Inicial
             }
             else{   //Si no son iguales
-                this.messageGame = "Upps,..Try Again";
+                this.messageGame = "Ups,..Try Again";
 				setTimeout(function() {
 					firstCard.flip();
 					secondCard.flip();
@@ -93,39 +95,37 @@ MemoryGame = function(gs) {
         }
         
 		if (this.Cardsfound == this.gameCards.length){  //si ya hemos pillado todas las cartas eres el ganador
-			this.messageGame = "You Win,Very Good..!!";
+			this.messageGame = "You Win...!!";
 	    }
     }
 
 
 
     /** Funciones Auxiliares */
-    this.createCards = function() {/**XX */
-		this.gameCards = [
-			new MemoryGameCard("8-ball"),new MemoryGameCard("8-ball"),
-			new MemoryGameCard("potato"), new MemoryGameCard("potato"),
-			new MemoryGameCard("dinosaur"), new MemoryGameCard("dinosaur"),
-			new MemoryGameCard("kronos"), new MemoryGameCard("kronos"),
-			new MemoryGameCard("rocket"), new MemoryGameCard("rocket"),
-			new MemoryGameCard("unicorn"), new MemoryGameCard("unicorn"),
-			new MemoryGameCard("guy"), new MemoryGameCard("guy"),
-			new MemoryGameCard("zeppelin"), new MemoryGameCard("zeppelin")
-		]
+    /**
+     * Creamos las cartas del juego
+     */
+    this.createCards = function() {
+        //Colocamos 2 por cada tipo de carta a nuestro array de cartas
+        for(var c = 0; c < this.nameCards.length; c++){
+            this.gameCards.push(new MemoryGameCard(this.nameCards[c]));
+            this.gameCards.push(new MemoryGameCard(this.nameCards[c]));
+        }
     }
+    
+    /**
+     * Desordenamos las cartas del juego
+     */
+    this.mixUpCards = function() {     
 
-    this.messUpCards = function() {/**XX */
+        var num = this.gameCards.length;
 
-		var numCards = this.gameCards.length;
-		var cardsAux = [];
-		
-		while(numCards > 0) {
-			rd = Math.floor(Math.random() * numCards);  //random rd
-			aux = this.gameCards[rd];
-			this.gameCards.splice(rd,1);
-			cardsAux.push(aux);
-			numCards = this.gameCards.length;
-		}
-		this.gameCards = cardsAux;
+        while(--num){
+            rd = Math.floor(Math.random() * num);  //random (rd)
+            tmp = this.gameCards[num];
+            this.gameCards[num] = this.gameCards[rd];
+            this.gameCards[rd] = tmp;
+        }
 	}
     
 };
@@ -140,16 +140,17 @@ MemoryGame = function(gs) {
  */
 MemoryGameCard = function(id) {
 
-    this.id = id;
-    this.isFlipped = false; //false si no ha sido volteada y true si esta volteada
-    this.isChosen = false; //ha sido cogida la carta?
+    this.id = id;   //identificador de la carta
+    this.isTurned = false; //false -> si no ha sido dado la vuelta y true lo contrario
+    this.isChosen = false; //ha sido escogida la carta
 
     /**Da la vuelta a la carta, cambiando el estado de la misma */
     this.flip = function(){
-        if(this.isFlipped == false){
-            this.isFlipped = true;
-        }else{
-            this.isFlipped = false;
+
+        if(this.isTurned == false){    //si no esta volteada -> dale la vuelta a la carta
+            this.isTurned = true;
+        }else{                          // lo contrario
+            this.isTurned = false;
         }
     }
 
@@ -170,9 +171,9 @@ MemoryGameCard = function(id) {
 
     this.draw = function(gs, pos){
 
-        if(this.isFlipped == false){
+        if(this.isTurned == false){ //Dibuja la carta de boca abajo, si no ha sido girado
             gs.draw("back", pos);
-        }else{
+        }else{                      //En otros casos dibuja la carta correspondiente
             gs.draw(this.id, pos);
         }
     }
