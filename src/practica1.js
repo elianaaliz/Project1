@@ -119,13 +119,16 @@ MemoryGame = function(gs) {
     this.mixUpCards = function() {     
 
         var num = this.gameCards.length;
+        var aux = [];
 
-        while(--num){
-            rd = Math.floor(Math.random() * num);  //random (rd)
-            tmp = this.gameCards[num];
-            this.gameCards[num] = this.gameCards[rd];
-            this.gameCards[rd] = tmp;
+        while(num !== 0){
+            rd = Math.floor(Math.random()*num);  //random (rd)
+			tmp = this.gameCards[rd];
+			this.gameCards.splice(rd,1);
+			aux.push(tmp);
+			num = this.gameCards.length;
         }
+        this.gameCards = aux;
 	}
     
 };
