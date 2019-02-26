@@ -39,6 +39,7 @@ MemoryGame = function(gs) {
     */
    this.draw = function(){
         this.gs.drawMessage(this.messageGame);
+        
         for(var i = 0; i < this.gameCards.length ; i++){
             this.gameCards[i].draw(this.gs, i);
         }
@@ -71,6 +72,7 @@ MemoryGame = function(gs) {
             this.cardOne.flip();
             this.state = 1; //pasamos al estado de pillar otra carta
         }
+
         //Hemos pillado la segunda
         if(this.state == 1 && !this.gameCards[cardId].isTurned){
             this.cardTwo = this.gameCards[cardId];
@@ -104,6 +106,7 @@ MemoryGame = function(gs) {
     }
 
      /** Funciones Auxiliares */
+
     /**
      * Creamos las cartas del juego
      */
@@ -119,7 +122,6 @@ MemoryGame = function(gs) {
      * Desordenamos las cartas del juego
      */
     this.mixUpCards = function() {     
-
         var num = this.gameCards.length;
         var aux = [];
 
@@ -132,11 +134,8 @@ MemoryGame = function(gs) {
         }
         this.gameCards = aux;
 	}
-
-    
     
 };
-
 
 
 /**
