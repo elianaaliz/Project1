@@ -24,15 +24,15 @@ MemoryGame = function(gs) {
     */
    this.initGame = function() {
 
-    this.messageGame = "!!..Memory Game..!!"; 
-    this.Cardsfound = 0;
-    this.state = 0;
-    this.createCards(); //crearCartas
-	this.mixUpCards(); //DesordenarCartas
-    this.loop();    //Bucle principal del juego
+        this.messageGame = "!!..Memory Game..!!"; 
+        this.Cardsfound = 0;
+        this.state = 0;
+        this.createCards(); //crearCartas
+        this.mixUpCards(); //DesordenarCartas
+        this.loop();    //Bucle principal del juego
    }
 
-    
+
 
    /**Dibuja el juego, esto es: (1) escribe el mensaje con el estado actual
     del juego y (2) pide a cada una de las cartas del tablero que se dibujen.
@@ -52,7 +52,8 @@ MemoryGame = function(gs) {
     this.loop = function(){
         var that = this;
         setInterval(function(){
-            that.draw()},16);
+            that.draw()}
+            ,16);
     }
 
     /**Este método se llama cada vez que el jugador pulsa
@@ -68,7 +69,7 @@ MemoryGame = function(gs) {
         if(this.state == 0 && !this.gameCards[cardId].isTurned){
             this.cardOne = this.gameCards[cardId];
             this.cardOne.flip();
-            this.state = 1; //ha elegido una carta, vamos a por la segunda
+            this.state = 1; //pasamos al estado de pillar otra carta
         }
         //Hemos pillado la segunda
         if(this.state == 1 && !this.gameCards[cardId].isTurned){
