@@ -32,6 +32,8 @@ MemoryGame = function(gs) {
     this.loop();    //Bucle principal del juego
    }
 
+    
+
    /**Dibuja el juego, esto es: (1) escribe el mensaje con el estado actual
     del juego y (2) pide a cada una de las cartas del tablero que se dibujen.
     */
@@ -41,6 +43,7 @@ MemoryGame = function(gs) {
             this.gameCards[i].draw(this.gs, i);
         }
    }
+
 
    /**  Es el bucle del juego. En este caso es muy sencillo: llamamos al
     método draw cada 16ms (equivalente a unos 60fps). Esto se realizará con
@@ -99,9 +102,7 @@ MemoryGame = function(gs) {
 	    }
     }
 
-
-
-    /** Funciones Auxiliares */
+     /** Funciones Auxiliares */
     /**
      * Creamos las cartas del juego
      */
@@ -130,6 +131,8 @@ MemoryGame = function(gs) {
         }
         this.gameCards = aux;
 	}
+
+    
     
 };
 
